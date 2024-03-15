@@ -46,3 +46,31 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 		StringMap: stringMap,
 	})
 }
+
+// Reservation is a Go function that handles making reservations.
+//
+// It takes a http.ResponseWriter and a http.Request as parameters and does not return anything.
+func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
+
+	render.Template(w, "make-reservation.page.html", &models.TemplateData{})
+}
+
+func (m *Repository) Generals(w http.ResponseWriter, r *http.Request) {
+
+	render.Template(w, "generals.page.html", &models.TemplateData{})
+}
+
+func (m *Repository) Majors(w http.ResponseWriter, r *http.Request) {
+
+	render.Template(w, "majors.page.html", &models.TemplateData{})
+}
+
+func (m *Repository) Availability(w http.ResponseWriter, r *http.Request) {
+
+	render.Template(w, "search-availability.page.html", &models.TemplateData{})
+}
+
+func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
+
+	render.Template(w, "contact.page.html", &models.TemplateData{})
+}
