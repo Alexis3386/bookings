@@ -1,11 +1,14 @@
 package handlers
 
 import (
+	"encoding/json"
+	"fmt"
+	"log"
 	"net/http"
 
-	"github.com/Alexis3386/bookings/pkg/config"
-	"github.com/Alexis3386/bookings/pkg/models"
-	"github.com/Alexis3386/bookings/pkg/render"
+	"github.com/Alexis3386/bookings/internal/config"
+	"github.com/Alexis3386/bookings/internal/models"
+	"github.com/Alexis3386/bookings/internal/render"
 )
 
 // TemplateData holds data send from handlers to template
@@ -30,7 +33,7 @@ func NewHandlers(r *Repository) {
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	remoteIp := r.RemoteAddr
 	m.App.Session.Put(r.Context(), "remote_ip", remoteIp)
-	render.Template(w, "home.page.html", &models.TemplateData{})
+	render.Template(w, r, "home.page.html", &models.TemplateData{})
 }
 
 // About is the about page handler
@@ -42,7 +45,7 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 
 	stringMap["remote_ip"] = remoteIP
 
-	render.Template(w, "about.page.html", &models.TemplateData{
+	render.Template(w, r, "about.page.html", &models.TemplateData{
 		StringMap: stringMap,
 	})
 }
@@ -52,25 +55,52 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 // It takes a http.ResponseWriter and a http.Request as parameters and does not return anything.
 func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
 
-	render.Template(w, "make-reservation.page.html", &models.TemplateData{})
+	render.Template(w, r, "make-reservation.page.html", &models.TemplateData{})
 }
 
 func (m *Repository) Generals(w http.ResponseWriter, r *http.Request) {
 
-	render.Template(w, "generals.page.html", &models.TemplateData{})
+	render.Template(w, r, "generals.page.html", &models.TemplateData{})
 }
 
 func (m *Repository) Majors(w http.ResponseWriter, r *http.Request) {
 
-	render.Template(w, "majors.page.html", &models.TemplateData{})
+	render.Template(w, r, "majors.page.html", &models.TemplateData{})
 }
 
 func (m *Repository) Availability(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, r, "search-availability.page.html", &models.TemplateData{})
+}
 
-	render.Template(w, "search-availability.page.html", &models.TemplateData{})
+func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
+	start := r.Form.Get("start")
+	end := r.Form.Get("end")
+
+	w.Write([]byte(fmt.Sprintf("start date is %s and end date is %s", start, end)))
+
+}
+
+type jsonResponse struct {
+	OK      bool   `json:"ok"`
+	Message string `json:"message"`
+}
+
+func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
+	resp := jsonResponse{
+		OK:      true,
+		Message: "Available!",
+	}
+
+	out, err := json.MarshalIndent(resp, "", "     ")
+	if err != nil {
+		log.Println(err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(out)
 }
 
 func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
 
-	render.Template(w, "contact.page.html", &models.TemplateData{})
+	render.Template(w, r, "contact.page.html", &models.TemplateData{})
 }

@@ -7,8 +7,9 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/Alexis3386/bookings/pkg/config"
-	"github.com/Alexis3386/bookings/pkg/models"
+	"github.com/Alexis3386/bookings/internal/config"
+	"github.com/Alexis3386/bookings/internal/models"
+	"github.com/justinas/nosurf"
 )
 
 var app *config.AppConfig
@@ -17,12 +18,12 @@ func NewTemplates(a *config.AppConfig) {
 	app = a
 }
 
-func AddDefaultData(td *models.TemplateData) *models.TemplateData {
-
+func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateData {
+	td.CSRFToken = nosurf.Token(r)
 	return td
 }
 
-func Template(w http.ResponseWriter, templ string, td *models.TemplateData) {
+func Template(w http.ResponseWriter, r *http.Request, templ string, td *models.TemplateData) {
 
 	var tc map[string]*template.Template
 
@@ -38,7 +39,7 @@ func Template(w http.ResponseWriter, templ string, td *models.TemplateData) {
 	}
 
 	buf := new(bytes.Buffer)
-	td = AddDefaultData(td)
+	td = AddDefaultData(td, r)
 	_ = t.Execute(buf, td)
 
 	// render the template
