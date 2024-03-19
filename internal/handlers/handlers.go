@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/Alexis3386/bookings/internal/config"
+	"github.com/Alexis3386/bookings/internal/forms"
 	"github.com/Alexis3386/bookings/internal/models"
 	"github.com/Alexis3386/bookings/internal/render"
 )
@@ -54,8 +55,40 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 //
 // It takes a http.ResponseWriter and a http.Request as parameters and does not return anything.
 func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, r, "make-reservation.page.html", &models.TemplateData{
+		Form: forms.New(nil),
+	})
+}
 
-	render.Template(w, r, "make-reservation.page.html", &models.TemplateData{})
+// PostReservation handles the posting of a reservation form
+func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	reservation := models.Reservation{
+		FirstName: r.Form.Get("first_name"),
+		LastName:  r.Form.Get("last_name"),
+		Email:     r.Form.Get("email"),
+		Phone:     r.Form.Get("phone"),
+	}
+
+	form := forms.New(r.PostForm)
+
+	form.Has("first_name", r)
+
+	if !form.Valid() {
+		data := make(map[string]interface{})
+		data["reservation"] = reservation
+
+		render.Template(w, r, "make-reservation.page.html", &models.TemplateData{
+			Form: form,
+			Data: data,
+		})
+		return
+	}
 }
 
 func (m *Repository) Generals(w http.ResponseWriter, r *http.Request) {
