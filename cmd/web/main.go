@@ -1,12 +1,14 @@
 package main
 
 import (
+	"encoding/gob"
 	"log"
 	"net/http"
 	"time"
 
 	"github.com/Alexis3386/bookings/internal/config"
 	"github.com/Alexis3386/bookings/internal/handlers"
+	"github.com/Alexis3386/bookings/internal/models"
 	"github.com/Alexis3386/bookings/internal/render"
 
 	"github.com/alexedwards/scs/v2"
@@ -22,7 +24,8 @@ var session *scs.SessionManager
 // No parameters.
 // No return values.
 func main() {
-
+	// what am i going to put in the session
+	gob.Register(models.Reservation{})
 	// change this to true when in production
 	app.InProduction = false
 
