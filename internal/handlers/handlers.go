@@ -5,14 +5,20 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"path/filepath"
 
 	"github.com/Alexis3386/bookings/internal/config"
 	"github.com/Alexis3386/bookings/internal/forms"
 	"github.com/Alexis3386/bookings/internal/models"
 	"github.com/Alexis3386/bookings/internal/render"
+	"github.com/CloudyKit/jet"
 )
 
 // TemplateData holds data send from handlers to template
+
+var root, _ = os.Getwd()
+var views = jet.NewHTMLSet(filepath.Join(root, "templates"))
 
 var Repo *Repository
 
@@ -31,10 +37,32 @@ func NewHandlers(r *Repository) {
 }
 
 // Home is the home page Handler
+// func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
+// 	remoteIp := r.RemoteAddr
+// 	m.App.Session.Put(r.Context(), "remote_ip", remoteIp)
+// 	render.Template(w, r, "home.page.html", &models.TemplateData{})
+// }
+
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
-	remoteIp := r.RemoteAddr
-	m.App.Session.Put(r.Context(), "remote_ip", remoteIp)
-	render.Template(w, r, "home.page.html", &models.TemplateData{})
+	data := make(jet.VarMap)
+	data.Set("user_id", 1)
+
+	renderPage(w, "home.jet", data)
+}
+
+func renderPage(w http.ResponseWriter, tmpl string, data jet.VarMap) error {
+	views.SetDevelopmentMode(true)
+	view, err := views.GetTemplate(tmpl)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	err = view.Execute(w, data, nil)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	return nil
 }
 
 // About is the about page handler
