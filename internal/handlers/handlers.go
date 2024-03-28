@@ -5,20 +5,14 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
-	"path/filepath"
 
 	"github.com/Alexis3386/bookings/internal/config"
 	"github.com/Alexis3386/bookings/internal/forms"
 	"github.com/Alexis3386/bookings/internal/models"
 	"github.com/Alexis3386/bookings/internal/render"
-	"github.com/CloudyKit/jet"
 )
 
 // TemplateData holds data send from handlers to template
-
-var root, _ = os.Getwd()
-var views = jet.NewHTMLSet(filepath.Join(root, "templates"))
 
 var Repo *Repository
 
@@ -44,25 +38,7 @@ func NewHandlers(r *Repository) {
 // }
 
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
-	data := make(jet.VarMap)
-	data.Set("user_id", 1)
-
-	renderPage(w, "home.jet", data)
-}
-
-func renderPage(w http.ResponseWriter, tmpl string, data jet.VarMap) error {
-	views.SetDevelopmentMode(true)
-	view, err := views.GetTemplate(tmpl)
-	if err != nil {
-		log.Println(err)
-		return err
-	}
-	err = view.Execute(w, data, nil)
-	if err != nil {
-		log.Println(err)
-		return err
-	}
-	return nil
+	render.Template(w, r, "home.page.html", &models.TemplateData{})
 }
 
 // About is the about page handler
@@ -111,7 +87,7 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 	form := forms.New(r.PostForm)
 
 	form.Required("first_name", "last_name", "email")
-	form.MinLength("first_name", 3, r)
+	form.MinLength("first_name", 3)
 	form.IsEmail("email")
 
 	if !form.Valid() {
