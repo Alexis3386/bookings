@@ -1,0 +1,22 @@
+mode: set
+github.com/Alexis3386/bookings/internal/handlers/handlers.go:23.47,27.2 1 1
+github.com/Alexis3386/bookings/internal/handlers/handlers.go:29.33,31.2 1 1
+github.com/Alexis3386/bookings/internal/handlers/handlers.go:40.67,42.2 1 1
+github.com/Alexis3386/bookings/internal/handlers/handlers.go:45.68,56.2 5 1
+github.com/Alexis3386/bookings/internal/handlers/handlers.go:61.74,70.2 4 1
+github.com/Alexis3386/bookings/internal/handlers/handlers.go:73.78,75.16 2 1
+github.com/Alexis3386/bookings/internal/handlers/handlers.go:75.16,78.3 2 0
+github.com/Alexis3386/bookings/internal/handlers/handlers.go:80.2,93.19 6 1
+github.com/Alexis3386/bookings/internal/handlers/handlers.go:93.19,102.3 4 0
+github.com/Alexis3386/bookings/internal/handlers/handlers.go:104.2,106.66 2 1
+github.com/Alexis3386/bookings/internal/handlers/handlers.go:109.71,112.2 1 1
+github.com/Alexis3386/bookings/internal/handlers/handlers.go:114.69,117.2 1 1
+github.com/Alexis3386/bookings/internal/handlers/handlers.go:119.75,121.2 1 1
+github.com/Alexis3386/bookings/internal/handlers/handlers.go:123.79,129.2 3 1
+github.com/Alexis3386/bookings/internal/handlers/handlers.go:136.79,143.16 3 1
+github.com/Alexis3386/bookings/internal/handlers/handlers.go:143.16,145.3 1 0
+github.com/Alexis3386/bookings/internal/handlers/handlers.go:147.2,148.14 2 1
+github.com/Alexis3386/bookings/internal/handlers/handlers.go:151.70,154.2 1 1
+github.com/Alexis3386/bookings/internal/handlers/handlers.go:156.81,158.9 2 1
+github.com/Alexis3386/bookings/internal/handlers/handlers.go:158.9,163.3 4 1
+github.com/Alexis3386/bookings/internal/handlers/handlers.go:165.2,171.4 4 0

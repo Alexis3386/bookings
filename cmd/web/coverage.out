@@ -1,0 +1,12 @@
+mode: set
+github.com/Alexis3386/bookings/cmd/web/main.go:24.13,27.16 2 0
+github.com/Alexis3386/bookings/cmd/web/main.go:27.16,29.3 1 0
+github.com/Alexis3386/bookings/cmd/web/main.go:31.2,37.16 3 0
+github.com/Alexis3386/bookings/cmd/web/main.go:40.18,54.16 10 1
+github.com/Alexis3386/bookings/cmd/web/main.go:54.16,57.3 2 0
+github.com/Alexis3386/bookings/cmd/web/main.go:59.2,67.12 7 1
+github.com/Alexis3386/bookings/cmd/web/middleware.go:14.53,15.71 1 0
+github.com/Alexis3386/bookings/cmd/web/middleware.go:15.71,18.3 2 0
+github.com/Alexis3386/bookings/cmd/web/middleware.go:29.45,40.2 3 1
+github.com/Alexis3386/bookings/cmd/web/middleware.go:47.50,49.2 1 1
+github.com/Alexis3386/bookings/cmd/web/routes.go:13.49,40.2 18 1
