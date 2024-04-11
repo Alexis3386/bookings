@@ -1,0 +1,1 @@
+ALTER TABLE reservations DROP CONSTRAINT fk_room_id
